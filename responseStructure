@@ -1,0 +1,9 @@
+{
+  "success": true/false,
+  "data": {}, 
+  "error": {
+    "code": "", // optional error code for programmatic handling
+    "message": "" // readable error message
+  },
+  "status": 200 // HTTP status code
+}
