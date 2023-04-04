@@ -16,22 +16,37 @@ const signup = ((request, response) => {
         "code": "Empty Fields",
         "message": "Username and Password are Empty"
       },
-      "status": 400
+      "status": 403
     }
 
     response.send(responseData);
 
   } else if (username == null || password == null) {
 
+    if (username == null) {
+
+      var responseData = {
+        "success": false,
+        "data": {},
+        "error": {
+          "code": "Username Field Empty",
+          "message": "Username or Password are Empty"
+        },
+        "status": 403
+      }
+
+      response.send(responseData);
+
+    }
 
     var responseData = {
       "success": false,
       "data": {},
       "error": {
-        "code": "Empty Field",
+        "code": "Password Field Empty",
         "message": "Username or Password are Empty"
       },
-      "status": 400
+      "status": 403
     }
 
     response.send(responseData);
@@ -49,7 +64,7 @@ const signup = ((request, response) => {
               "code": "Duplicate",
               "message": "Already Exists"
             },
-            "status": 500
+            "status": 409
           }
 
           response.send(responseData);
@@ -62,7 +77,7 @@ const signup = ((request, response) => {
                 username: username.trim(),
                 password: hash,
                 DateTime: new Date().toString(),
-                Type: 'USER', 
+                Type: 'USER',
                 Name: request.headers.name == null ? '' : request.headers.name
               });
 
