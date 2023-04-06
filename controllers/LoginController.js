@@ -55,7 +55,6 @@ const login = ((request, response) => {
                                     uid: username,
                                     type: type,
                                     name: uname,
-                                    exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60)
                                 },
                                 'key'
                             );
