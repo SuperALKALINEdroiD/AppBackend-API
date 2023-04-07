@@ -21,7 +21,11 @@ const userSchema = new mongoose.Schema({
   },
   Name: {
     type: String
-  }
+  }, 
+  Token: {
+    type: String,
+    required: true
+  },
 });
 
 // Create a model from the schema

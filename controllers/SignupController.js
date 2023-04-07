@@ -1,6 +1,7 @@
 const user = require('../models/Users');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 const signup = ((request, response) => {
 
@@ -73,12 +74,21 @@ const signup = ((request, response) => {
           bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS))
             .then((hash) => {
 
+              var token = jwt.sign(
+                {
+                  uid: username,
+                  name: request.headers.name == null ? '' : request.headers.name
+                },
+                'key'
+              );
+
               let userData = new user({
                 username: username.trim(),
                 password: hash,
                 DateTime: new Date().toString(),
                 Type: 'USER',
-                Name: request.headers.name == null ? '' : request.headers.name
+                Name: request.headers.name == null ? '' : request.headers.name,
+                Token: token
               });
 
               userData.save()

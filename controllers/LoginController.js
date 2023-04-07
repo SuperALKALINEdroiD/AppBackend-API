@@ -1,7 +1,5 @@
 const user = require('../models/Users');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
 
 const login = ((request, response) => {
 
@@ -46,18 +44,10 @@ const login = ((request, response) => {
                     type = result[0].Type;
                     uname = result[0].Name;
 
-
                     bcrypt.compare(password, hashedPassword)
                         .then(() => {
                             // jwt
-                            var token = jwt.sign(
-                                {
-                                    uid: username,
-                                    type: type,
-                                    name: uname,
-                                },
-                                'key'
-                            );
+                            var token = result[0].Token;
 
                             var responseData = {
                                 "success": true,
