@@ -7,7 +7,7 @@ const logSchema = new mongoose.Schema({
     required: true
   },
   content: {
-    type: String,
+    type: Object,
     required: true
   },
   date: {
