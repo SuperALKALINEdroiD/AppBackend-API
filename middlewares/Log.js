@@ -1,7 +1,6 @@
 const Log = require("../models/Log");
 const fs = require('fs');
 
-
 const logger = ((request, response, next) => {
 
     const log = {
