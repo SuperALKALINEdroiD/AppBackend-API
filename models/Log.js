@@ -1,17 +1,13 @@
 const mongoose = require('mongoose');
 
 // Define the schema
-const postSchema = new mongoose.Schema({
-  title: {
+const logSchema = new mongoose.Schema({
+  path: {
     type: String,
     required: true
   },
   content: {
-    type: String,
-    required: true
-  },
-  author: {
-    type: String,
+    type: Object,
     required: true
   },
   date: {
@@ -21,7 +17,7 @@ const postSchema = new mongoose.Schema({
 });
 
 // Create a model from the schema
-const Post = mongoose.model('Post', postSchema);
+const Log = mongoose.model('Logs', logSchema);
 
 // Export the model
-module.exports = Post;
+module.exports = Log;

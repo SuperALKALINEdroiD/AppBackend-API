@@ -1,7 +1,5 @@
 const user = require('../models/Users');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
 
 const login = ((request, response) => {
 
@@ -46,19 +44,10 @@ const login = ((request, response) => {
                     type = result[0].Type;
                     uname = result[0].Name;
 
-
                     bcrypt.compare(password, hashedPassword)
                         .then(() => {
                             // jwt
-                            var token = jwt.sign(
-                                {
-                                    uid: username,
-                                    type: type,
-                                    name: uname,
-                                    exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60)
-                                },
-                                'key'
-                            );
+                            var token = result[0].Token;
 
                             var responseData = {
                                 "success": true,
@@ -66,7 +55,7 @@ const login = ((request, response) => {
                                     token: token,
                                 },
                                 "error": {},
-                                "status": 400
+                                "status": 200
                             }
 
                             response.send(responseData);
@@ -81,7 +70,7 @@ const login = ((request, response) => {
                                     "code": "Comparison Failed",
                                     "message": "Wrong Password"
                                 },
-                                "status": 400
+                                "status": 402
                             }
 
                             response.send(responseData);
@@ -95,7 +84,7 @@ const login = ((request, response) => {
                             "code": "Invalid User",
                             "message": "User Does Not Exist"
                         },
-                        "status": 400
+                        "status": 401
                     }
 
                     response.send(responseData);
@@ -109,7 +98,7 @@ const login = ((request, response) => {
                         "code": "Search Failed",
                         "message": "Query Execution Error"
                     },
-                    "status": 400
+                    "status": 500
                 }
 
                 response.send(responseData);
