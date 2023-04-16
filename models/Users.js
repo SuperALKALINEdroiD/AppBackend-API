@@ -24,7 +24,8 @@ const userSchema = new mongoose.Schema({
   }, 
   Token: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
 });
 
