@@ -4,17 +4,18 @@ const user = require('../models/Users');
 function auth(request, response, next) {
   const authToken = request.headers.authorization;
 
+  console.log(authToken.split(' '));
+
   if (!authToken) {
     response.send({
       "success": false,
       "data": {},
       "error": {
         "code": "Authentication Failed",
-        "message": "Token AWOL"
+        "message": "No Token"
       },
       "status": 401
-    }
-    );
+    });
   }
 
   const token = authToken.split(' ')[1];
@@ -30,16 +31,13 @@ function auth(request, response, next) {
       "status": 401
     }
     );
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // check db for user
+  } else {
+    // check db
 
     user.find({ 'Token': token })
       .then((result) => {
 
-        if (result.length == 1) {
+        if (result.length == 1) {  // unique jwt tokens
           next();
         } else {
           response.send({
@@ -47,31 +45,27 @@ function auth(request, response, next) {
             "data": {},
             "error": {
               "code": "Authentication Failed",
-              "message": "Token AWOL"
+              "message": "User Not Found"
             },
             "status": 401
           });
         }
 
       }).catch((error) => {
-
+        response.send({
+          "success": false,
+          "data": {},
+          "error": {
+            "code": error,
+            "message": "Invalid Token"
+          },
+          "status": 401
+        });
       });
-
-    next();
-
-  } catch (err) {
-    response.send({
-      "success": false,
-      "data": {},
-      "error": {
-        "code": "Authentication Failed",
-        "message": "Invalid Token"
-      },
-      "status": 401
-    }
-    );
   }
+
 }
+
 
 module.exports = auth;
 
