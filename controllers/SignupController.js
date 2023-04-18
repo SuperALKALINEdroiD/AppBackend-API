@@ -20,7 +20,7 @@ const signup = ((request, response) => {
       "status": 403
     }
 
-    response.send(responseData);
+    return response.json(responseData);
 
   } else if (username == null || password == null) {
 
@@ -36,7 +36,7 @@ const signup = ((request, response) => {
         "status": 403
       }
 
-      response.send(responseData);
+      return response.json(responseData);
 
     }
 
@@ -50,7 +50,7 @@ const signup = ((request, response) => {
       "status": 403
     }
 
-    response.send(responseData);
+    return response.json(responseData);
 
   } else {
 
@@ -68,7 +68,7 @@ const signup = ((request, response) => {
             "status": 409
           }
 
-          response.send(responseData);
+          return response.json(responseData);
         } else {
 
           bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS))
@@ -102,7 +102,7 @@ const signup = ((request, response) => {
                     "status": 200
                   }
 
-                  response.send(responseData);
+                  return response.json(responseData);
 
                 }).catch((error) => {
 
@@ -116,7 +116,7 @@ const signup = ((request, response) => {
                     "status": 500
                   }
 
-                  response.send(responseData);
+                  return response.json(responseData);
 
                 });
 
@@ -132,7 +132,7 @@ const signup = ((request, response) => {
                 "status": 500
               }
 
-              response.send(responseData);
+              return response.json(responseData);
             });
         }
       }).catch((error) => {
@@ -147,7 +147,7 @@ const signup = ((request, response) => {
           "status": 500
         }
 
-        response.send(responseData);
+        return response.json(responseData);
 
       });
   }

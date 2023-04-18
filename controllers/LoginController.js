@@ -18,7 +18,7 @@ const login = ((request, response) => {
             "status": 400
         }
 
-        response.send(responseData);
+        return response.json(responseData);
 
     } else if (username == null || password == null) {
 
@@ -32,7 +32,7 @@ const login = ((request, response) => {
             "status": 400
         }
 
-        response.send(responseData);
+        return response.json(responseData);
 
     } else {
 
@@ -58,7 +58,7 @@ const login = ((request, response) => {
                                 "status": 200
                             }
 
-                            response.send(responseData);
+                            return response.json(responseData);
 
                         }).catch((error) => {
                             // wrong password ?
@@ -73,7 +73,7 @@ const login = ((request, response) => {
                                 "status": 402
                             }
 
-                            response.send(responseData);
+                            return response.json(responseData);
                         });
                 } else {
                     // no user exists
@@ -87,7 +87,7 @@ const login = ((request, response) => {
                         "status": 401
                     }
 
-                    response.send(responseData);
+                    return response.json(responseData);
                 }
 
             }).catch((error) => {
@@ -101,7 +101,7 @@ const login = ((request, response) => {
                     "status": 500
                 }
 
-                response.send(responseData);
+                return response.json(responseData);
             });
     }
 
