@@ -3,11 +3,9 @@ const user = require('../models/Users');
 
 function auth(request, response, next) {
   const authToken = request.headers.authorization;
-
-  console.log(authToken.split(' '));
-
+  
   if (!authToken) {
-    response.send({
+    return response.json({
       "success": false,
       "data": {},
       "error": {
@@ -21,7 +19,7 @@ function auth(request, response, next) {
   const token = authToken.split(' ')[1];
 
   if (!token) {
-    response.send({
+    return response.json({
       "success": false,
       "data": {},
       "error": {
@@ -40,7 +38,7 @@ function auth(request, response, next) {
         if (result.length == 1) {  // unique jwt tokens
           next();
         } else {
-          response.send({
+          return response.json({
             "success": false,
             "data": {},
             "error": {
@@ -52,7 +50,7 @@ function auth(request, response, next) {
         }
 
       }).catch((error) => {
-        response.send({
+        return response.json({
           "success": false,
           "data": {},
           "error": {
