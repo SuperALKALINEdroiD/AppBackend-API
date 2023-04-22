@@ -68,7 +68,7 @@ module.exports = auth;
 
 
 //  headers: {
-//   'Authorization': 'Bearer ' + token
+//   'authorization': 'Bearer ' + token
 // }
 
 
