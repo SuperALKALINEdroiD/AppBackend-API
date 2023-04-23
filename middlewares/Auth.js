@@ -27,8 +27,7 @@ function auth(request, response, next) {
         "message": "Token AWOL"
       },
       "status": 401
-    }
-    );
+    });
   } else {
     // check db
 
@@ -69,7 +68,7 @@ module.exports = auth;
 
 
 //  headers: {
-//   'Authorization': 'Bearer ' + token
+//   'authorization': 'Bearer ' + token
 // }
 
 

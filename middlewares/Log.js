@@ -10,11 +10,10 @@ const logger = ((request, response, next) => {
             headers: request.headers,
             ip: request.ip,
             method: request.method,
-            parameters: request.params.name,
+            parameters: request.params,
             protocol: request.protocol,
             xhr: request.xhr,
             host: request.hostname,
-
         },
         Date: new Date().toString(),
     };
