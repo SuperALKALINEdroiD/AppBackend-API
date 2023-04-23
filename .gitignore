@@ -15,3 +15,5 @@ logs
 results
 build
 content
+
+BackupLogs/*
