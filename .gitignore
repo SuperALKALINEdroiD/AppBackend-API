@@ -16,4 +16,4 @@ results
 build
 content
 
-BackupLogs/*
+/BackupLogs/*
