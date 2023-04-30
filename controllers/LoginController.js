@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 
 const login = ((request, response) => {
 
+    console.log(request);
+
     let username = request.headers.username;
     let password = request.headers.pass;
 
