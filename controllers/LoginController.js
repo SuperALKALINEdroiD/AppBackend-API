@@ -1,9 +1,8 @@
 const user = require('../models/Users');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const login = ((request, response) => {
-
-    console.log(request);
 
     let username = request.headers.username;
     let password = request.headers.pass;
@@ -47,14 +46,39 @@ const login = ((request, response) => {
                     uname = result[0].Name;
 
                     bcrypt.compare(password, hashedPassword)
-                        .then(() => {
+                        .then((match) => {
+
+                            if (!match) {
+                                var responseData = {
+                                    "success": false,
+                                    "data": {},
+                                    "error": {
+                                        "code": "Comparison Failed",
+                                        "message": "Wrong Password"
+                                    },
+                                    "status": 402
+                                }
+
+                                return response.json(responseData);
+                            }
                             // jwt
                             var token = result[0].Token;
+
+                            var identifier = jwt.sign(
+                                {
+                                  uid: username,
+                                  name: request.headers.name == null ? '' : request.headers.name,
+                                  token: token 
+                                },
+                                'key',
+                                { expiresIn: '7200s' }
+                              );
 
                             var responseData = {
                                 "success": true,
                                 "data": {
-                                    token: token,
+                                    token: identifier,
+                                    user: username
                                 },
                                 "error": {},
                                 "status": 200
@@ -63,7 +87,8 @@ const login = ((request, response) => {
                             return response.json(responseData);
 
                         }).catch((error) => {
-                            // wrong password ?
+
+                            // some error
 
                             var responseData = {
                                 "success": false,

@@ -5,6 +5,6 @@ const { signup } = require('../controllers/SignupController');
 const { login } = require('../controllers/LoginController');
 
 userRoutes.post('/signup', signup);
-userRoutes.get('/login', login);
+userRoutes.post('/login', login);
 
 module.exports = userRoutes;
