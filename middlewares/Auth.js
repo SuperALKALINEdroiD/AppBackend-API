@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken');
 const user = require('../models/Users');
 
 function auth(request, response, next) {
-  const authToken = request.headers.authorization;
-  
+  const authToken = request.headers.token;
+  const tag = request.headers.username;
+
   if (!authToken) {
     return response.json({
       "success": false,
@@ -29,40 +30,39 @@ function auth(request, response, next) {
       "status": 401
     });
   } else {
-    // check db
+    // to-do decode incoming token and the token within, match users
+    try {
+      jwt.verify(token, 'key');
+      console.log('Valid token');
 
-    user.find({ 'Token': token })
-      .then((result) => {
+      // check db
 
-        if (result.length == 1) {  // unique jwt tokens
-          next();
-        } else {
-          return response.json({
-            "success": false,
-            "data": {},
-            "error": {
-              "code": "Authentication Failed",
-              "message": "User Not Found"
-            },
-            "status": 401
-          });
-        }
-
-      }).catch((error) => {
-        return response.json({
-          "success": false,
-          "data": {},
-          "error": {
-            "code": error,
-            "message": "Invalid Token"
-          },
-          "status": 401
+      user.find({'Token': token })
+        .then((result) => {
+          if (result.length == 1) {
+            // verify
+            
+          } else {
+            // return 
+          }
+        }).catch(() => {
+          //return
         });
+
+      next();
+    } catch (error) {
+      return response.json({
+        "success": false,
+        "data": {},
+        "error": {
+          "code": "Authentication Failed",
+          "message": "Invalid Token" + error.name
+        },
+        "status": 401
       });
+    }
   }
-
 }
-
 
 module.exports = auth;
 
