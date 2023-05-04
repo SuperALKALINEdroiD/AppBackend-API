@@ -32,24 +32,49 @@ function auth(request, response, next) {
   } else {
     // to-do decode incoming token and the token within, match users
     try {
-      jwt.verify(token, 'key');
-      console.log('Valid token');
-
+      var decoded = jwt.verify(token, 'key');
       // check db
 
-      user.find({'Token': token })
+      user.find({ 'Token': decoded.token })
         .then((result) => {
           if (result.length == 1) {
-            // verify
-            
+            if (result[0].username === tag) {
+              next();
+            } else {
+              return response.json({
+                "success": false,
+                "data": {},
+                "error": {
+                  "code": "Authentication Failed",
+                  "message": "Invalid User"
+                },
+                "status": 401
+              });
+            }
           } else {
-            // return 
+            // return
+            return response.json({
+              "success": false,
+              "data": {},
+              "error": {
+                "code": "Authentication Failed",
+                "message": "AUth Fail: JWT Verfication"
+              },
+              "status": 401
+            });
           }
         }).catch(() => {
           //return
+          return response.json({
+            "success": false,
+            "data": {},
+            "error": {
+              "code": "Authentication Failed",
+              "message": "Invalid Token" + error.name
+            },
+            "status": 401
+          });
         });
-
-      next();
     } catch (error) {
       return response.json({
         "success": false,
