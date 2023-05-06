@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const user = require('../models/Users');
+require('dotenv').config();
 
 function auth(request, response, next) {
   const authToken = request.headers.token;
@@ -32,7 +33,7 @@ function auth(request, response, next) {
   } else {
     // to-do decode incoming token and the token within, match users
     try {
-      var decoded = jwt.verify(token, 'key');
+      var decoded = jwt.verify(token, 'process.env.JWT_KEY');
       // check db
 
       user.find({ 'Token': decoded.token })
@@ -58,7 +59,7 @@ function auth(request, response, next) {
               "data": {},
               "error": {
                 "code": "Authentication Failed",
-                "message": "AUth Fail: JWT Verfication"
+                "message": "Auth Fail: JWT Verfication"
               },
               "status": 401
             });
@@ -81,7 +82,7 @@ function auth(request, response, next) {
         "data": {},
         "error": {
           "code": "Authentication Failed",
-          "message": "Invalid Token" + error.name
+          "message": "Token Verification Failedd" + error.name
         },
         "status": 401
       });
