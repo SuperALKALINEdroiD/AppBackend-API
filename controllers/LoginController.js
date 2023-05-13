@@ -71,7 +71,7 @@ const login = ((request, response) => {
                                   name: request.headers.name == null ? '' : request.headers.name,
                                   token: token 
                                 },
-                                'process.env.JWT_KEY',
+                                process.env.JWT_KEY,
                                 { expiresIn: '7200s' }
                               );
 

@@ -33,7 +33,7 @@ function auth(request, response, next) {
   } else {
     // to-do decode incoming token and the token within, match users
     try {
-      var decoded = jwt.verify(token, 'process.env.JWT_KEY');
+      var decoded = jwt.verify(token, process.env.JWT_KEY);
       // check db
 
       user.find({ 'Token': decoded.token })
@@ -82,7 +82,7 @@ function auth(request, response, next) {
         "data": {},
         "error": {
           "code": "Authentication Failed",
-          "message": "Token Verification Failedd" + error.name
+          "message": "Token Verification Failed" + error.name
         },
         "status": 401
       });
