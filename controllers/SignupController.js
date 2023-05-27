@@ -79,7 +79,7 @@ const signup = ((request, response) => {
                   uid: username,
                   name: request.headers.name == null ? '' : request.headers.name
                 },
-                'key'
+                process.env.JWT_KEY
               );
 
               let userData = new user({

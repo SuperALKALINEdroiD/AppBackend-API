@@ -1,6 +1,7 @@
 const user = require('../models/Users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const login = ((request, response) => {
 
@@ -70,7 +71,7 @@ const login = ((request, response) => {
                                   name: request.headers.name == null ? '' : request.headers.name,
                                   token: token 
                                 },
-                                'key',
+                                process.env.JWT_KEY,
                                 { expiresIn: '7200s' }
                               );
 
