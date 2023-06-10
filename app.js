@@ -9,8 +9,12 @@ const contentRoutes = require('./routes/App');
 const chat = require('./routes/Chat');
 const userRoutes = require('./routes/Users');
 
-app.use(cors())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
 app.use(logger);
+
 app.use('/', userRoutes);
 app.use('/', contentRoutes);
 app.use('/chat', chat);
