@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Define the schema
 const chatSchema = new mongoose.Schema({
     ChatGroupID: {
         type: String,
@@ -12,7 +11,8 @@ const chatSchema = new mongoose.Schema({
         required: true
     },
     UserID: {
-        type: String
+        type: [String],
+        default: [],
     }
 });
 
